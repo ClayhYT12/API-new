@@ -36,7 +36,6 @@ Moralis.start({ serverUrl, appId, masterKey });
     }
 }
 // ROTA DE LOGIN API
-
 const Auth = async(account,passwordhash)=>{
   //setTimeout(() => res(itemName), 2000);
   let arrDadosConstructItemPlayer = [];
@@ -51,7 +50,47 @@ const Auth = async(account,passwordhash)=>{
     });
   }
 }
-
+// FIM DA ROTA DO LOGIN
+// ROTA DE DADOS DO PLAYER
+const PlayerData = async(playerName)=>{
+  //setTimeout(() => res(itemName), 2000);
+  let arrPlayerData = [];
+  try {
+    await new Promise((resolve) => setTimeout(resolve,1000));
+    const Player = Moralis.Object.extend("Player");
+    const query = new Moralis.Query(Player);
+    console.log("passei aqui");
+    query.equalTo("PlayerName", "bobo123");
+    
+    const results = await query.first();
+    
+    const PlayerName = results.get("PlayerName");
+    const PlayerProfession = results.get("PlayerProfession");
+    const PlayerEducation = results.get("PlayerEducation");
+    const PlayerSCC = results.get("PlayerSCC");
+    const PlayerJoy = results.get("PlayerJoy");
+    const PlayerHealth = results.get("PlayerHealth");
+    const PlayerEnergy = results.get("PlayerEnergy");
+    const PlayerExp = results.get("PlayerExp");
+    console.log(PlayerName);
+    arrPlayerData.push({
+      PlayerName: PlayerName,
+      PlayerProfession: PlayerProfession,
+      PlayerEducation: PlayerEducation,
+      PlayerSCC: PlayerSCC,
+      PlayerJoy: PlayerJoy,
+      PlayerHealth: PlayerHealth,
+      PlayerEnergy: PlayerEnergy,
+      PlayerExp: PlayerExp,
+      });
+    return arrPlayerData;  
+  } catch (error) {
+    arrPlayerData.push({
+      error:"ocorreu algum erro na interface - PlayerData"
+    });
+  }
+}
+// FIM DA ROTA DO PLAYER
 
 const GetItenPlayer = async(idPlayer)=>{
     //setTimeout(() => res(itemName), 2000);
@@ -86,4 +125,5 @@ const GetItenPlayer = async(idPlayer)=>{
   module.exports.GetItenPlayerConstruct = GetItenPlayerConstruct;
   module.exports.GetItenPlayer = GetItenPlayer;
   module.exports.Auth = Auth;
+  module.exports.PlayerData = PlayerData;
  

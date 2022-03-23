@@ -92,6 +92,27 @@ function refresh() {
     }
 
   });
+  // FIM DA ROTA DE SISTEMA DE LOGIN
+  // ROTA DO PLAYER DATA
+  routes.get("/player/:playerName",(req,res)=> { 
+    try 
+    {
+      const fn = async(playerName) => 
+      {
+        console.log('Função iniciada... ' + req.params.playerName);
+        const data = await apimoralis.PlayerData(req.params.playerName);
+        console.log(" Player itens " + data);
+        res.status(200).json(data);   
+      }
+    fn(req.params.id); 
+    } 
+    catch (error) 
+    {
+         
+    }
+
+  });
+  // FIM DA ROTA DO PLAYER DATA
 
     
 })();

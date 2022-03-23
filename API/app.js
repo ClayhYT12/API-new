@@ -11,7 +11,7 @@ app.use(routes);
 
 app.use(express.json());
 
-app.listen(1010, () => {
+app.listen(80, () => {
     console.log("Servidor iniciado");
 });
 
