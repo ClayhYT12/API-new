@@ -50,16 +50,9 @@ function refresh() {
   window .location.reload();
 }
 
-routes.use(express.json());
 
 (async () => { 
   
-  routes.post('/player/build-loot/', function(request, response){
-    console.log(request.body);
-    console.log(request.body.userID)      // your JSON
-     response.send(request.body);    // echo the result back
-  });
-
   routes.get("/player/item/:idIten/:idPlayer",(req,res)=> { 
     try 
     {
@@ -81,7 +74,7 @@ routes.use(express.json());
   });
 
   // ROTA DO SISTEMA DE LOGIN
-  routes.get("/user/auth/:account/:passwordhash",(req,res)=> { 
+  routes.get("/player/auth/:account/:passwordhash",(req,res)=> { 
     try 
     {
       const fn = async(account,passwordhash) => 
@@ -100,14 +93,14 @@ routes.use(express.json());
 
   });
   // FIM DA ROTA DE SISTEMA DE LOGIN
-  // ROTA DO USER DATA
-  routes.get("/user/:playerName",(req,res)=> { 
+  // ROTA DO PLAYER DATA
+  routes.get("/player/:playerName",(req,res)=> { 
     try 
     {
       const fn = async(playerName) => 
       {
-        console.log('Função iniciada... ' + req.body.playerName);
-        const data = await apimoralis.UserData(req.params.playerName);
+        console.log('Função iniciada... ' + req.params.playerName);
+        const data = await apimoralis.PlayerData(req.params.playerName);
         console.log(" Player itens " + data);
         res.status(200).json(data);   
       }
@@ -119,50 +112,10 @@ routes.use(express.json());
     }
 
   });
-  // FIM DA ROTA DO USER DATA
-    // ROTA DO PLAYER DATA
-    routes.post("/player/:playerName",(req,res)=> { 
-      try 
-      {
-        const fn = async(playerName) => 
-        {
-          console.log('Função iniciada... ' + req.params.playerName);
-          const data = await apimoralis.PlayerData(req.body.playerName);
-          console.log(" Player itens " + data);
-          res.status(200).json(data);   
-        }
-      fn(req.params.id); 
-      } 
-      catch (error) 
-      {
-           
-      }
-  
-    });
-    // FIM DA ROTA DO PLAYER DATA
-
-   // ROTA DO LOTE COMPRADO 
-   routes.post("/player/build-loot/",(req,res)=> { 
-    try 
-    {
-      const fn = async(playerName) => 
-      {
-        console.log('Função iniciada... ' + req.params.playerName);
-        //const data = await apimoralis.PlayerData(req.params.playerName);
-        console.log(req.body.objectID,req.body.CategoryType,req.body.IndexModelPrefabFixable,req.body.Level,req.body.Location,req.body.MaxLevel,req.body.OcupationList,req.body.Price,req.body.ProfitByDay,req.body.Roi,req.body.Wear);
-        res.status(200).json();   
-      }
-    fn(req.params.id); 
-    } 
-    catch (error) 
-    {
-         
-    }
-
-  });
   // FIM DA ROTA DO PLAYER DATA
+
     
 })();
 
-
+routes.use(express.json());
 module.exports = routes;
