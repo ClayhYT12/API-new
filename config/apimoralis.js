@@ -205,7 +205,7 @@ const GetItenPlayer = async(idPlayer)=>{
 }
 
 // ROTA DO  PLAYER VERIFY
-const PlayerVerify = async(Player,Id)=>{
+const PlayerVerify = async(Player)=>{
   //setTimeout(() => res(itemName), 2000);
   let arrDadosConstructItemPlayer = [];
   try {
@@ -213,8 +213,7 @@ const PlayerVerify = async(Player,Id)=>{
     const PlayerItem = Moralis.Object.extend("PlayerLoot");
     const query = new Moralis.Query(PlayerItem);
   
-    query.equalTo("ItenID", Player);
-    query.equalTo("PlayerID", Id);
+    query.equalTo("PlayerName", Player);
 
     const results = await query.first();
     

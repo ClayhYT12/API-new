@@ -182,15 +182,16 @@ routes.use(express.json());
   // FIM DA ROTA DO BUY LOT
 
     // ROTA DO VERIFY PLAYER CONSTRUCT
-    routes.post("/player/construct/verify/",(req,res)=> { 
+    routes.post("/player/construct/verify",(req,res)=> { 
       try 
       {
-        const fn = async(playerName) => 
+        const fn = async() => 
         {
-          const data = await apimoralis.PlayerVerify(req.body.Player,parseInt(req.body.Id));
+          console.log(req.body.Player);
+          const data = await apimoralis.PlayerVerify(req.body.Player);
           res.status(200).json(data);   
         }
-    fn(req.body.Player); 
+    fn(); 
       } 
       catch (error) 
       {
