@@ -209,12 +209,12 @@ routes.use(express.json());
       {
         const fn = async() => 
         {
-          console.log(req.body.Player, req.body.PlayerSCC);
+          console.log(req.body.Player, req.body.LotPrice);
 
           var getSCC = await apimoralis.GetPlayerSCC(req.body.Player)
               console.log(getSCC[0].PlayerSCC)
-            if (getSCC[0].PlayerSCC < parseInt(req.body.PlayerSCC)) {
-              res.status(200).json({PlayerSCC:'Saldo insulficiente'});
+            if (getSCC[0].PlayerSCC < parseInt(req.body.LotPrice)) {
+              res.status(200).json({LotPrice:'Saldo insulficiente'});
            }else{
               getSCC[0].PlayerSCC = getSCC[0].PlayerSCC - parseInt(req.body.PlayerSCC);
               console.log(getSCC[0].PlayerSCC)

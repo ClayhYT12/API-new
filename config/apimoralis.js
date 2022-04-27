@@ -212,17 +212,21 @@ const PlayerVerify = async(Player)=>{
     await new Promise((resolve) => setTimeout(resolve,1000));
     const PlayerItem = Moralis.Object.extend("PlayerLoot");
     const query = new Moralis.Query(PlayerItem);
-  
+
     query.equalTo("PlayerName", Player);
 
-    const results = await query.first();
-    
-    const PlayerName = results.get("PlayerName");
-    const IdConst = results.get("Id");
-    arrDadosConstructItemPlayer.push({
-      Player: PlayerName,
-      ItenID: IdConst,
+    const results = await query.find();
+    console.log("Aqui " + Player);
+    console.log(results);
+    for (let i = 0; i < results.length; i++) {
+      const object = results[i];
+      console.log(object.get("Id") + " - " + object.get("PlayerName"));
+      arrDadosConstructItemPlayer.push({
+        Player: object.get("PlayerName"),
+        ItenID: object.get("Id")
       });
+
+    }
     return arrDadosConstructItemPlayer;  
   } catch (error) {
     arrDadosConstructItemPlayer.push({
