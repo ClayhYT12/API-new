@@ -12,6 +12,7 @@ const apimoralis = require('./apimoralis');
 const rsa = require('node-rsa');
 const fs = require('fs');
 const { TIMEOUT } = require('dns');
+const { json } = require('express/lib/response');
 
 
 var publickey = new rsa();
@@ -190,6 +191,37 @@ routes.use(express.json());
           console.log(req.body.Player);
           const data = await apimoralis.PlayerVerify(req.body.Player);
           res.status(200).json(data);   
+        }
+    fn(); 
+      } 
+      catch (error) 
+      {
+           
+      }
+  
+    });
+    // FIM DA ROTA DO VERIFY PLAYER CONSTRUCT
+
+    
+    // ROTA UPDATE PLAYERSCC
+    routes.post("/player/scc/update",(req,res)=> { 
+      try 
+      {
+        const fn = async() => 
+        {
+          console.log(req.body.Player, req.body.PlayerSCC);
+
+          var getSCC = await apimoralis.GetPlayerSCC(req.body.Player)
+              console.log(getSCC[0].PlayerSCC)
+            if (getSCC[0].PlayerSCC < parseInt(req.body.PlayerSCC)) {
+              res.status(200).json({PlayerSCC:'Saldo insulficiente'});
+           }else{
+              getSCC[0].PlayerSCC = getSCC[0].PlayerSCC - parseInt(req.body.PlayerSCC);
+              console.log(getSCC[0].PlayerSCC)
+              const data = await apimoralis.SCCUpdate(req.body.Player,parseInt(getSCC[0].PlayerSCC));
+              res.status(200).json(data); 
+           }
+            
         }
     fn(); 
       } 

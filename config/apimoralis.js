@@ -233,6 +233,69 @@ const PlayerVerify = async(Player)=>{
 }
 // FIM DA ROTA DO PLAYER VERIFY
 
+// ROTA GET PLAYERSCC
+const GetPlayerSCC = async(PlayerName)=>{
+  //setTimeout(() => res(itemName), 2000);
+  let arrDadosConstructItemPlayer = [];
+  try {
+    await new Promise((resolve) => setTimeout(resolve,1000));
+    const Player = Moralis.Object.extend("Player");
+    const query = new Moralis.Query(Player);
+    console.log("passei aqui");
+    query.equalTo("PlayerName", "bobo123");
+    
+    const results = await query.first();
+    
+    const PlayerName = results.get("PlayerName");
+    const PlayerProfession = results.get("PlayerProfession");
+    const PlayerEducation = results.get("PlayerEducation");
+    const PlayerSCC = results.get("PlayerSCC");
+    const PlayerJoy = results.get("PlayerJoy");
+    const PlayerHealth = results.get("PlayerHealth");
+    const PlayerEnergy = results.get("PlayerEnergy");
+    const PlayerExp = results.get("PlayerExp");
+    
+    arrDadosConstructItemPlayer.push({
+      PlayerSCC: PlayerSCC,
+      });
+      console.log(arrDadosConstructItemPlayer);
+    return arrDadosConstructItemPlayer;  
+  } catch (error) {
+    arrDadosConstructItemPlayer.push({
+      error:"Erro interno"
+    });
+    return arrDadosConstructItemPlayer;
+  }
+}
+// FIM DA ROTA DO PLAYERSCC
+
+// ROTA DO PLAYERSCC UPDATE
+const SCCUpdate = async(Player,playerSCC)=>{
+  //setTimeout(() => res(itemName), 2000);
+  let arrDadosConstructItemPlayer = [];
+  try {
+    const PlayerItem = Moralis.Object.extend("Player");
+    const query = new Moralis.Query(PlayerItem);
+    query.equalTo("PlayerName", Player);
+
+    const results = await query.first();
+    console.log(results + " " + Player + " " + playerSCC);
+    const NewPlayerSCC = results.set("PlayerSCC",playerSCC);
+    const update= await results.save(null,{useMasterKey:true});
+    console.log(update);
+    arrDadosConstructItemPlayer.push({
+      PlayerSCC: NewPlayerSCC,
+      });
+    return arrDadosConstructItemPlayer;  
+  } catch (error) {
+    arrDadosConstructItemPlayer.push({
+      error:"Erro interno"
+    });
+    return arrDadosConstructItemPlayer;
+  }
+}
+// FIM DA ROTA DO PLAYERSCC UPDATE
+
 
   module.exports.GetItenPlayerConstruct = GetItenPlayerConstruct;
   module.exports.GetItenPlayer = GetItenPlayer;
@@ -241,4 +304,6 @@ const PlayerVerify = async(Player)=>{
   module.exports.postPlayerBuyLot = postPlayerBuyLot;
   module.exports.postPlayerBuildConstruct = postPlayerBuildConstruct;
   module.exports.PlayerVerify = PlayerVerify;
+  module.exports.GetPlayerSCC = GetPlayerSCC;
+  module.exports.SCCUpdate = SCCUpdate;
  
