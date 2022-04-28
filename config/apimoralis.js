@@ -213,7 +213,7 @@ const PlayerVerify = async(Player)=>{
     const PlayerItem = Moralis.Object.extend("PlayerLoot");
     const query = new Moralis.Query(PlayerItem);
 
-    query.equalTo("PlayerName", Player);
+    //query.equalTo("PlayerName", Player);
 
     const results = await query.find();
     console.log("Aqui " + Player);
