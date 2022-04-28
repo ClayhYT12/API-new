@@ -170,7 +170,7 @@ routes.use(express.json());
       const fn = async(playerName) => 
       {
         const data = await apimoralis.postPlayerBuyLot(req.body.Player,parseInt(req.body.Id), req.body.Coordinate,parseInt(req.body.TyleType),parseInt(req.body.IdOwner),parseInt(req.body.Price));
-        res.status(200);   
+        res.status(200).json({info:"ok"});   
       }
   fn(req.body.Player); 
     } 
